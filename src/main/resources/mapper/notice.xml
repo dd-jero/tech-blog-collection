@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+        namespace="com.amur.notice.model.mapper.NoticeMapper">
+
+    <resultMap type="noticeDto" id="notice">
+        <result column="board_id" property="noticeNo"/>
+        <result column="member_id" property="userId"/>
+        <result column="title" property="title"/>
+        <result column="content" property="content"/>
+        <result column="read_count" property="hit"/>
+        <result column="regist_time" property="registerTime"/>
+    </resultMap>
+
+    <insert id="writeNotice" parameterType="noticeDto">
+        insert into board (user_id, title, content, read_count, regist_time, type)
+        values (#{userId}, #{title}, #{content}, 0, now(), 1)
+    </insert>
+
+    <select id="listNotice" parameterType="map" resultMap="notice">
+        select b.board_id, b.member_id, b.title, b.content,b.like_count, b.read_count, b.regist_time
+        from board b, member m
+        where b.type=1 and b.member_id = m.member_id
+        order by b.board_id desc
+    </select>
+
+
+</mapper>
