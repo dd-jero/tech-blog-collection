@@ -16,7 +16,6 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/community")
 public class CommunityController {
 
@@ -25,7 +24,6 @@ public class CommunityController {
     @Autowired
     public CommunityController(CommunityService communityService) 
     {
-
         this.communityService = communityService;
     }
     
@@ -59,6 +57,10 @@ public class CommunityController {
               log.info("getArticle called with boardId: " + boardId);
             return new ResponseEntity<CommunityDto>(communityService.getArticle(boardId),HttpStatus.OK);
 
+    }
+    @GetMapping("test")
+    public String test(){
+        return "test";
     }
     //게시글 삭제
     @DeleteMapping("/{articleno}")
